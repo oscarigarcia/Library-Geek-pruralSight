@@ -3,9 +3,29 @@ const chalk = require("chalk");
 const debug = require("debug")("app");
 const morgan = require("morgan");
 const path = require("path");
+const sql = require("mssql");
 
 const app = express();
 const port = process.env.PORT;
+
+const config = {
+  user: "root",
+  password: "arjori02",
+  server: "localhost",
+  database: "library_geek",
+  Port: 3306,
+  pool: {
+    max: 10,
+    min: 0,
+    idleTimeoutMillis: 30000,
+  },
+  options: {
+    encrypt: true,
+    enableArithAbort: true,
+  },
+};
+
+sql.connect(config).catch((err) => debug(err));
 
 app.use(morgan("tiny"));
 
